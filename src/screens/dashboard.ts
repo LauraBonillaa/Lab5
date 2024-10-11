@@ -5,6 +5,7 @@ import { getProductsState } from "../store/actions";
 
 class Dashboard extends HTMLElement {
 
+    
     constructor() {
         super()
         this.attachShadow({ mode: "open" })
@@ -12,6 +13,7 @@ class Dashboard extends HTMLElement {
     }
 
     async connectedCallback() {
+        console.log("holi");
         if (!appState.products || appState.products.length === 0) {
             const action = await getProductsState();
             dispatch(action);
@@ -20,39 +22,35 @@ class Dashboard extends HTMLElement {
             console.log('Products already loaded:', appState.products);
         }
         
-        this.render()
-
+        // Asegúrate de que render se llame aquí
+        this.render();
     }
-
+    
     fetchProducts() {
-        try {
-            if (!appState.products || appState.products.length === 0) {
-                console.log('No products available in the state.');
-                return null;
-            }
-
-            const container = this.ownerDocument.createElement('section');
-            container.className = 'products-container';
-
-            appState.products.forEach((product: any) => {
-                const productItem = this.ownerDocument.createElement('cart-product') as Product;
-                productItem.setAttribute(ProductAttribute.uid, product.id.toString());
-                productItem.setAttribute(ProductAttribute.image, product.image);
-                productItem.setAttribute(ProductAttribute.description, product.title);
-                productItem.setAttribute(ProductAttribute.category, product.category);
-                productItem.setAttribute(ProductAttribute.price, product.price.toString());
-                productItem.setAttribute(ProductAttribute.rating, product.rating.rate.toString());
-
-                container.appendChild(productItem);
-            });
-
-            console.log('Products rendered:', appState.products);
-            return container;
-        } catch (error) {
-            console.error("Error rendering products:", error);
+        if (!appState.products || appState.products.length === 0) {
+            console.log('No products available in the state.');
             return null;
         }
+    
+        const container = document.createElement('section');
+        container.className = 'products-container';
+    
+        appState.products.forEach((product: any) => {
+            const productItem = document.createElement('card-product') as Product;
+            productItem.setAttribute(ProductAttribute.uid, product.id.toString());
+            productItem.setAttribute(ProductAttribute.image, product.image);
+            productItem.setAttribute(ProductAttribute.description, product.description);
+            productItem.setAttribute(ProductAttribute.category, product.category);
+            productItem.setAttribute(ProductAttribute.price, product.price.toString());
+            productItem.setAttribute(ProductAttribute.rating, product.rating.rate.toString());
+    
+            container.appendChild(productItem);
+        });
+    
+        console.log('Products rendered:', appState.products);
+        return container;
     }
+    
 
     renderShoppingCart() {
         const cartContainer = this.ownerDocument.createElement('section');
@@ -63,7 +61,7 @@ class Dashboard extends HTMLElement {
         } else {
             appState.cart.forEach((item: Product) => {
                 const cartItemComponent = this.ownerDocument.createElement('cart-component') as ShoppingCartItem;
-                cartItemComponent.setAttribute(Shoppingcartitem.uid, item.uid?.toString() || ''); // Aquí se agrega el UID
+                cartItemComponent.setAttribute(Shoppingcartitem.uid, item.uid?.toString() || ''); // Aquí se agrega el UID4
                 cartItemComponent.setAttribute(Shoppingcartitem.utitle, item.description || '');
                 cartItemComponent.setAttribute(Shoppingcartitem.price, item.price?.toString() || '');
                 cartItemComponent.setAttribute(Shoppingcartitem.image, item.image || '');
@@ -98,6 +96,8 @@ class Dashboard extends HTMLElement {
             if (cartContainer) {
                 this.shadowRoot.appendChild(cartContainer);
             }
+            console.log('Esta mierda imprime', productsContainer);
+            
         }  
 }
 

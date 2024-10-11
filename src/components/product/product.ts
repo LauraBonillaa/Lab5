@@ -3,7 +3,7 @@ import { addToCart } from "../../store/actions"
 export enum Attribute {
     "uid" = "uid",
     "image" = "image",
-    "title" = "title",
+    "name" = "name",
     "description" = "description",
     "category" = "category",
     "price" = "price",
@@ -54,7 +54,7 @@ class Product extends HTMLElement {
             <div id="character">
             <img id="img" src="${this.image ? this.image : 'Not found'}">
             <div class="text">
-            <h2 class="name">${this.title}</h2>
+            <h2 class="name">${this.name}</h2>
             <p>Description: ${this.description}</p>
             <p>Category: ${this.category}</p>
             <p>Price: $${this.price}</p>
@@ -72,6 +72,7 @@ class Product extends HTMLElement {
             const product = {
                 uid: this.uid,
                 image: this.image,
+                name: this.name,
                 description: this.description,
                 category: this.category,
                 price: this.price,
