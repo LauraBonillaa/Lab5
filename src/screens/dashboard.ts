@@ -35,7 +35,7 @@ class Dashboard extends HTMLElement {
             container.className = 'products-container';
 
             appState.products.forEach((product: any) => {
-                const productItem = this.ownerDocument.createElement('product-component') as Product;
+                const productItem = this.ownerDocument.createElement('cart-product') as Product;
                 productItem.setAttribute(ProductAttribute.uid, product.id.toString());
                 productItem.setAttribute(ProductAttribute.image, product.image);
                 productItem.setAttribute(ProductAttribute.description, product.title);

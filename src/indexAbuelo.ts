@@ -4,39 +4,20 @@ import { appState } from "./store/index"
 import { getProducts } from "./services/getproducts"
 class AppContainer extends HTMLElement {
 
-    dataApi: any[] = []
-    cards: Product[] = []
+    
 
     constructor() {
         super()
         this.attachShadow({ mode: 'open' })
     }
 
-    async connectedCallback() {
+    connectedCallback() {
         this.render()
-        this.dataApi = await getProducts()
-        this.createProduct()
+        
+        
     }
 
-    createProduct() {
-       
-
-        this.dataApi.forEach((element) => {
-            const card = this.ownerDocument.createElement("card-product") as Product
-
-            card.setAttribute(Attribute.image, element.image)
-            card.setAttribute(Attribute.title, element.title)
-            card.setAttribute(Attribute.description, element.description)
-            card.setAttribute(Attribute.category, element.category)
-            card.setAttribute(Attribute.price, element.price)
-            card.setAttribute(Attribute.rating, element.rating.rate)
-            console.log(element)
-            
-        this.shadowRoot?.querySelector('.product-container')?.appendChild(card)
-
-        })
-
-    }
+    
     render() {
         // this.cards.forEach((card)=>{
         //     this.shadowRoot?.appendChild(card)
